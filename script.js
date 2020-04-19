@@ -1,4 +1,10 @@
 Vue.component("product", {
+	props: {
+		premium:{
+			type: Boolean,
+			required : true
+		}
+	},
 	template : `<div class="product">
 	
 		<div class="product-image">
@@ -13,6 +19,8 @@ Vue.component("product", {
 			<p>{{description}}</p>
 			<hr />
 			<p>{{ sale }}</p>
+			<hr />
+			<p>Shipping: {{shipping}}</p>
 			<hr />
 			<a v-bind:href="link">Search Details</a>
 			<hr />
@@ -110,10 +118,20 @@ Vue.component("product", {
 			} else {
 				return this.brand + ' ' + this.product + ' are not on sale'
 			}
+		},
+		shipping(){
+			if(this.premium){
+				return "Free"
+			}
+			return 2.99
 		}
 	}
 })
 
 var app = new Vue({
-	el: '#app'
+	el: '#app',
+	data: {
+		premium : false
+	}
+
 })
