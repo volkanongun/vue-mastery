@@ -1,63 +1,18 @@
-Vue.component("product", {
+Vue.component("product-details", {
 	props: {
-		premium:{
-			type: Boolean,
-			required : true
-		}
-	},
-	template : `<div class="product">
-	
-		<div class="product-image">
-			<img v-bind:src="image" alt="">
-		</div>
+	    details: {
+	      type: Array,
+	      required: true
+	    }
+	  },
+	template:`<div><h2>Details</h2>
+		<ul>
+			<li v-for="detail in details">{{detail}}</li>
+		</ul>
+	</div>`
+})
 
-		<div class="product-info">
-			<h1>{{ title }}</h1>
-			<div class="cart">
-				<p>Cart ({{cart}})</p>
-			</div>
-			<p>{{description}}</p>
-			<hr />
-			<p>{{ sale }}</p>
-			<hr />
-			<p>Shipping: {{shipping}}</p>
-			<hr />
-			<a v-bind:href="link">Search Details</a>
-			<hr />
-			<p v-if="inStock">In stock</p>
-			<p v-else :class="{outOfStock : !inStock}">Out of stock</p>
-			<hr />
-			<p v-if="stoktaVar > 10">Stokta var</p>
-			<p v-else-if="stoktaVar < 10 && stoktaVar > 0">Az kaldı</p>				
-			<p v-else="stoktaVar === 0">Bitdi</p>
-			<hr />
-			<h2>Details</h2>
-			<ul>
-				<li v-for="detail in details">{{detail}}</li>
-			</ul>
-			<hr />
-			<h2>Variants</h2>
-			<ul>
-				<li v-for="(variant, index) in variants" 
-					:key="variant.variantId"
-					class="color-box"
-					:style="{ backgroundColor: variant.variantColor }"
-					@mouseover="updateProduct(index)">
-				</li>
-			</ul>
-			<hr />
-			<h2>Sizes</h2>
-			<ul>
-				<li v-for="size in sizes">{{ size }}</li>
-			</ul>
-
-			<button v-on:click="addToCart" 
-					:disabled="!inStock"
-					:class="{disabledButton : !inStock}">Add to cart</button>
-
-			<button @click="removeFromCart">Remote from cart</button>
-		</div>
-	</div>`,
+Vue.component("product", {
 	data (){
 		return {
 			brand: 'Vue Mastery',
@@ -86,6 +41,78 @@ Vue.component("product", {
 		    onSale: true
 		}
 	},
+	props: {
+		premium:{
+			type: Boolean,
+			required : true
+		}
+	},
+	template : `<div class="product">
+	
+		<div class="product-image">
+			<img v-bind:src="image" alt="">
+		</div>
+
+		<div class="product-info">
+			<h1>{{ title }}</h1>
+			<div class="cart">
+				<p>Cart ({{cart}})</p>
+			</div>
+			<p>{{description}}</p>
+			
+			<hr />
+
+			<p>{{ sale }}</p>
+			
+			<hr />
+
+			<p>Shipping: {{shipping}}</p>
+			
+			<hr />
+
+			<a v-bind:href="link">Search Details</a>
+			
+			<hr />
+
+			<p v-if="inStock">In stock</p>
+			<p v-else :class="{outOfStock : !inStock}">Out of stock</p>
+			
+			<hr />
+
+			<p v-if="stoktaVar > 10">Stokta var</p>
+			<p v-else-if="stoktaVar < 10 && stoktaVar > 0">Az kaldı</p>				
+			<p v-else="stoktaVar === 0">Bitdi</p>
+			
+			<hr />
+
+			<product-details :details="details"></product-details>
+			
+			<hr />
+
+			<h2>Variants</h2>
+			<ul>
+				<li v-for="(variant, index) in variants" 
+					:key="variant.variantId"
+					class="color-box"
+					:style="{ backgroundColor: variant.variantColor }"
+					@mouseover="updateProduct(index)">
+				</li>
+			</ul>
+			
+			<hr />
+
+			<h2>Sizes</h2>
+			<ul>
+				<li v-for="size in sizes">{{ size }}</li>
+			</ul>
+
+			<button v-on:click="addToCart" 
+					:disabled="!inStock"
+					:class="{disabledButton : !inStock}">Add to cart</button>
+
+			<button @click="removeFromCart">Remote from cart</button>
+		</div>
+	</div>`,
 	methods: {
 		addToCart(){
 			this.cart += 1
@@ -133,5 +160,4 @@ var app = new Vue({
 	data: {
 		premium : false
 	}
-
 })
