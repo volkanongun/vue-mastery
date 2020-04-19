@@ -4,25 +4,27 @@ var app = new Vue({
 		brand: 'Vue Mastery',
 		product: 'Socks',
 		description: 'A pair of warm, fuzzy socks',
-		image: './assets/vmSocks-green-onWhite.jpg',
+		selectedVariant: 0,
 		link: 'http://google.com',
-		inStock: true,
 		stoktaVar : 0,
 		details : ["%80 cotton", "%20 polyester", "Gender Natural"],
 		variants: [
 	      {
 	        variantId: 2234,
 	        variantColor: 'green',
-	        variantImage: './assets/vmSocks-green-onWhite.jpg'
+	        variantImage: './assets/vmSocks-green-onWhite.jpg',
+	        variantQuantity : 10
 	      },
 	      {
 	        variantId: 2235,
 	        variantColor: 'blue',
-	        variantImage: './assets/vmSocks-blue-onWhite.jpg'
+	        variantImage: './assets/vmSocks-blue-onWhite.jpg',
+	        variantQuantity : 0
 	      }
 	    ],
 	    sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
 	    cart: 0,
+	    onSale: true
 	},
 	methods: {
 		addToCart(){
@@ -35,13 +37,27 @@ var app = new Vue({
 				this.cart = 0;
 			}
 		},
-		updateProduct(img){
-			this.image = img
+		updateProduct(index){
+			this.selectedVariant = index
+			console.log(index)
 		}
 	},
 	computed : {
 		title(){
 			return this.brand + ' ' + this.product
+		},
+		image(){
+			return this.variants[this.selectedVariant].variantImage
+		},
+		inStock(){
+			return this.variants[this.selectedVariant].variantQuantity
+		},
+		sale(){
+			if(this.onSale) {
+				return this.brand + ' ' + this.product + ' are on sale!'
+			} else {
+				return this.brand + ' ' + this.product + ' are not on sale'
+			}
 		}
 	}
 })

@@ -23,6 +23,8 @@
 				</div>
 				<p>{{description}}</p>
 				<hr />
+				<p>{{ sale }}</p>
+				<hr />
 				<a v-bind:href="link">Search Details</a>
 				<hr />
 				<p v-if="inStock">In stock</p>
@@ -39,11 +41,11 @@
 				<hr />
 				<h2>Variants</h2>
 				<ul>
-					<li v-for="variant in variants" 
+					<li v-for="(variant, index) in variants" 
 						:key="variant.variantId"
 						class="color-box"
 						:style="{ backgroundColor: variant.variantColor }"
-						@mouseover="updateProduct(variant.variantImage)">
+						@mouseover="updateProduct(index)">
 					</li>
 				</ul>
 				<hr />
