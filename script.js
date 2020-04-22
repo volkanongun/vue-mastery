@@ -4,7 +4,7 @@ Vue.component("product-details", {
 	      type: Array,
 	      required: true
 	    }
-	  },
+	},
 	template:`<div><h2>Details</h2>
 		<ul>
 			<li v-for="detail in details">{{detail}}</li>
@@ -108,6 +108,8 @@ Vue.component("product", {
 					:class="{disabledButton : !inStock}">Add to cart</button>
 
 			<button v-on:click="removeFromCart">Remote from cart</button>
+
+			<product-review></product-review>
 		</div>
 	</div>`,
 	methods: {
@@ -144,6 +146,45 @@ Vue.component("product", {
 				return "Free"
 			}
 			return 2.99
+		}
+	}
+})
+
+Vue.component('product-review', {
+	template: `
+		<form class="review-form">
+	      <p>
+	        <label for="name">Name:</label>
+	        <input id="name" v-model="name" placeholder="name">
+	      </p>
+	      
+	      <p>
+	        <label for="review">Review:</label>      
+	        <textarea id="review" v-model="review"></textarea>
+	      </p>
+	      
+	      <p>
+	        <label for="rating">Rating:</label>
+	        <select id="rating" v-model.number="rating">
+	          <option>5</option>
+	          <option>4</option>
+	          <option>3</option>
+	          <option>2</option>
+	          <option>1</option>
+	        </select>
+	      </p>
+	          
+	      <p>
+	        <input type="submit" value="Submit">  
+	      </p>    
+	    
+	    </form>
+	`,
+	data(){
+		return {
+			name: null,
+			review: null,
+			rating: 0
 		}
 	}
 })
